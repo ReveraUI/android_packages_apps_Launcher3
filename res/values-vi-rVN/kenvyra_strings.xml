@@ -7,7 +7,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Application name -->
     <!-- General -->
-    <string name="settings_title">Cài đặt Evo X Launcher</string>
+    <string name="settings_title">Cài đặt Kenvyra Launcher</string>
     <!-- Categories -->
     <string name="home_category_title">Màn hình chính</string>
     <string name="home_category_summary">Đặt bảng điều khiển Google và nhiều hơn</string>

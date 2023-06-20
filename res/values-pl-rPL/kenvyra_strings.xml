@@ -8,7 +8,7 @@
     <!-- Application name -->
     <!-- Folder titles -->
     <!-- General -->
-    <string name="settings_title">Ustawienia Launchera Evo X</string>
+    <string name="settings_title">Ustawienia Launchera Kenvyra</string>
     <!-- Categories -->
     <string name="home_category_title">Ekran główny</string>
     <string name="home_category_summary">Ustaw panel Google Now i inne</string>

@@ -7,7 +7,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Application name -->
     <!-- General -->
-    <string name="settings_title">Impostazioni Evo X Launcher</string>
+    <string name="settings_title">Impostazioni Kenvyra Launcher</string>
     <!-- Categories -->
     <string name="home_category_title">Schermata home</string>
     <string name="home_category_summary">Imposta il pannello Google now e altro ancora</string>

@@ -6,7 +6,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Application name -->
-    <string name="evolution_app_name" translatable="false">Evolution X Launcher</string>
+    <string name="kenvyra_app_name" translatable="false">Kenvyra Launcher</string>
 
     <!-- General -->
     <string name="settings_title">Home settings</string>

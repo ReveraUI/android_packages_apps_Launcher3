@@ -191,7 +191,7 @@ android_library {
 // Build rule for Launcher3 app.
 //
 android_app {
-    name: "Launcher3",
+    name: "KenvyraLauncher3",
 
     static_libs: [
         "Launcher3CommonDepsLib",
@@ -341,7 +341,7 @@ android_library {
 
 // Build rule for Launcher3 Go app for Android Go devices.
 android_app {
-    name: "Launcher3Go",
+    name: "KenvyraLauncher3Go",
 
     static_libs: ["Launcher3CommonDepsLib"],
 
@@ -388,7 +388,7 @@ android_app {
 
 // Build rule for Quickstep app.
 android_app {
-    name: "Launcher3QuickStep",
+    name: "KenvyraLauncher",
 
     static_libs: ["Launcher3QuickStepLib"],
     optimize: {

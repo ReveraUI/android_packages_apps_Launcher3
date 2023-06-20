@@ -8,7 +8,7 @@
     <!-- Application name -->
     <!-- Folder titles -->
     <!-- General -->
-    <string name="settings_title">Evo X ランチャー設定</string>
+    <string name="settings_title">Kenvyra ランチャー設定</string>
     <!-- Categories -->
     <string name="home_category_title">ホーム画面</string>
     <string name="home_category_summary">Google Now パネルやその他の設定をする</string>
