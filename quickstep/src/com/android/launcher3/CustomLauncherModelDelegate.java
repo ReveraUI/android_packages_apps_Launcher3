@@ -128,15 +128,14 @@ public class CustomLauncherModelDelegate extends QuickstepModelDelegate
         mApp.getModel().enqueueModelUpdateTask(new BaseModelUpdateTask() {
             @Override
             public void execute(LauncherAppState app, BgDataModel dataModel, AllAppsList apps) {
-                List<ItemInfo> items = new ArrayList<>(mSmartspaceTargets.size());
+                BgDataModel.FixedContainerItems container = new BgDataModel.FixedContainerItems(-110);
                 for (SmartspaceTarget target : list) {
                     SmartspaceItem item = new SmartspaceItem();
                     item.setSmartspaceTarget(target);
-                    item.container = -110;
+                    item.container = container.containerId;
                     item.itemType = 8;
-                    items.add(item);
+                    container.items.add(item);
                 }
-                BgDataModel.FixedContainerItems container = new BgDataModel.FixedContainerItems(-110, items);
                 bindExtraContainerItems(container);
             }
         });

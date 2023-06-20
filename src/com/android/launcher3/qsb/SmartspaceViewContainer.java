@@ -15,7 +15,7 @@ import android.widget.FrameLayout.LayoutParams;
 import com.android.launcher3.CustomLauncher;
 import com.android.launcher3.CustomLauncherModelDelegate;
 
-import com.android.launcher3.celllayout.CellLayoutLayoutParams;;
+import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
@@ -82,7 +82,7 @@ public class SmartspaceViewContainer extends FrameLayout implements PluginListen
 
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
-        CellLayoutLayoutParams lp = (CellLayoutLayoutParams) getLayoutParams();
+        CellLayout.LayoutParams lp = (CellLayout.LayoutParams) getLayoutParams();
         lp.setMargins(left, top, right, bottom);
         setLayoutParams(lp);
     }
