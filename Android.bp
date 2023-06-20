@@ -159,8 +159,6 @@ android_library {
         "libGoogleFeed",
         "libParticles",
         "monet",
-        "bcsmartspace-google",
-        "SystemUIPluginLib",
         "view_capture"
     ],
     manifest: "AndroidManifest-common.xml",
