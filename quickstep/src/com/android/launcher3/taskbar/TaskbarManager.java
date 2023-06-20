@@ -69,6 +69,8 @@ import com.android.systemui.unfold.util.ScopedUnfoldTransitionProgressProvider;
 import java.io.PrintWriter;
 import java.util.StringJoiner;
 
+import lineageos.providers.LineageSettings;
+
 /**
  * Class to manage taskbar lifecycle
  */
@@ -85,8 +87,8 @@ public class TaskbarManager implements OnSharedPreferenceChangeListener {
     private static final Uri NAV_BAR_KIDS_MODE = Settings.Secure.getUriFor(
             Settings.Secure.NAV_BAR_KIDS_MODE);
 
-    private static final Uri ENABLE_TASKBAR_URI = Settings.System.getUriFor(
-            Settings.System.ENABLE_TASKBAR);
+    private static final Uri ENABLE_TASKBAR_URI = LineageSettings.System.getUriFor(
+            LineageSettings.System.ENABLE_TASKBAR);
 
     private final Context mContext;
     private final DisplayController mDisplayController;
@@ -154,8 +156,8 @@ public class TaskbarManager implements OnSharedPreferenceChangeListener {
         mEnableTaskBarListener = isTaskbarEnabled -> {
             // Create the illusion of this taking effect immediately
             // Also needed because TaskbarManager inits before SystemUiProxy on start
-            boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.ENABLE_TASKBAR, 0) == 1;
+            boolean enabled = LineageSettings.System.getInt(mContext.getContentResolver(),
+                    LineageSettings.System.ENABLE_TASKBAR, 0) == 1;
             SystemUiProxy.INSTANCE.get(mContext).setTaskbarEnabled(enabled);
 
             // Restart launcher
@@ -268,8 +270,8 @@ public class TaskbarManager implements OnSharedPreferenceChangeListener {
                 boolean enabled = LauncherPrefs.getPrefs(mContext).getBoolean(DeviceProfile.KEY_PHONE_TASKBAR, false);
                 SystemUiProxy.INSTANCE.get(mContext).setTaskbarEnabled(enabled);
 
-                Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.ENABLE_TASKBAR, enabled ? 1 : 0);
+                LineageSettings.System.putInt(mContext.getContentResolver(),
+                        LineageSettings.System.ENABLE_TASKBAR, enabled ? 1 : 0);
                 break;
         }
     }

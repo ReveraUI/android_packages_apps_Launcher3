@@ -63,6 +63,8 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+import lineageos.providers.LineageSettings;
+
 @SuppressLint("NewApi")
 public class DeviceProfile {
 
@@ -311,8 +313,8 @@ public class DeviceProfile {
         isPhone = !isTablet;
         isTwoPanels = isTablet && isMultiDisplay;
         boolean allowTaskbar = prefs.getBoolean(KEY_PHONE_TASKBAR, isTablet);
-        boolean isTaskBarEnabled = Settings.System.getInt(context.getContentResolver(),
-                Settings.System.ENABLE_TASKBAR, isTablet ? 1 : 0) == 1;
+        boolean isTaskBarEnabled = LineageSettings.System.getInt(context.getContentResolver(),
+                LineageSettings.System.ENABLE_TASKBAR, isTablet ? 1 : 0) == 1;
         isTaskbarPresent = (isTablet || allowTaskbar || isTaskBarEnabled) && ApiWrapper.TASKBAR_DRAWN_IN_PROCESS;
 
         // Some more constants.
