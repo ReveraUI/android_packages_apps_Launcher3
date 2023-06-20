@@ -38,7 +38,7 @@ public class CustomLauncherModelDelegate extends QuickstepModelDelegate
     public static final String TAG = "CustomLauncherModelDelegate";
 
     public final Context mContext;
-    public final Deque mSmartspaceTargets = new LinkedList<List>();
+    public final Deque mSmartspaceTargets = new LinkedList();
 
     public SmartspaceSession mSmartspaceSession;
 
@@ -64,9 +64,8 @@ public class CustomLauncherModelDelegate extends QuickstepModelDelegate
             return;
         }
         mSmartspaceTargets.descendingIterator().forEachRemaining((x) -> {
-            List targets = (List) x;
-            writer.println(prefix + "   Number of targets: " + targets.size());
-            Iterator it = targets.iterator();
+            writer.println(prefix + "   Number of targets: " + mSmartspaceTargets.size());
+            Iterator it = mSmartspaceTargets.iterator();
             while (it.hasNext()) {
                 writer.println(prefix + "      " + ((SmartspaceTarget) it.next()));
             }
