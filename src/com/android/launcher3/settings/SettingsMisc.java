@@ -77,13 +77,11 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
                     : Collections.singletonList(DeveloperOptionsFragment.class.getName());
 
     private static final String DEVELOPER_OPTIONS_KEY = "pref_developer_options";
-    private static final String SUGGESTIONS_KEY = "pref_suggestions";
 
     public static final String EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
     public static final String EXTRA_SHOW_FRAGMENT_ARGS = ":settings:show_fragment_args";
     private static final int DELAY_HIGHLIGHT_DURATION_MILLIS = 600;
     public static final String SAVE_HIGHLIGHTED_KEY = "android:preference_highlighted";
-    protected static final String DPS_PACKAGE = "com.google.android.as";
 
     @VisibleForTesting
     static final String EXTRA_FRAGMENT = ":settings:fragment";
@@ -290,9 +288,6 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
                     return updateDeveloperOption();
                 case Utilities.KEY_BLUR_DEPTH:
                     return BlurUtils.supportsBlursOnWindows();
-                case SUGGESTIONS_KEY:
-                    // Show if Device Personalization Services is present.
-                    return isDPSEnabled(getContext());
             }
 
             return true;
@@ -314,14 +309,6 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
                 }
             }
             return showPreference;
-        }
-
-        public static boolean isDPSEnabled(Context context) {
-            try {
-                return context.getPackageManager().getApplicationInfo(DPS_PACKAGE, 0).enabled;
-            } catch (PackageManager.NameNotFoundException e) {
-                return false;
-            }
         }
 
         @Override
