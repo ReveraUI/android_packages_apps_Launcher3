@@ -139,8 +139,8 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         Drawable gIcon = getContext().getDrawable(R.drawable.ic_super_g_color);
         Drawable gIconThemed = getContext().getDrawable(R.drawable.ic_super_g_themed);
         Drawable sIcon = getContext().getDrawable(R.drawable.ic_allapps_search);
-        Drawable lens = getContext().getDrawable(R.drawable.ic_lens_color);
-        Drawable lensThemed = getContext().getDrawable(R.drawable.ic_lens_themed);
+        Drawable lens = Utilities.isGSAEnabled(getContext()) ? getContext().getDrawable(R.drawable.ic_lens_color) : null;
+        Drawable lensThemed = Utilities.isGSAEnabled(getContext()) ? getContext().getDrawable(R.drawable.ic_lens_themed) : null;
         
         // Shift the widget horizontally so that its centered in the parent (b/63428078)
         View parent = (View) getParent();
@@ -158,61 +158,63 @@ public class AppsSearchContainerLayout extends ExtendedEditText
           setCompoundDrawablesRelativeWithIntrinsicBounds(sIcon, null, lens, null);
         }
 
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    float touchX = event.getRawX();
-                    float touchY = event.getRawY();
-                    int rightDrawableWidth = getCompoundDrawables()[2].getBounds().width();
-                    int leftDrawableWidth = getCompoundDrawables()[0].getBounds().width();
-                    int paddingEnd = getPaddingEnd();
-                    int paddingStart = getPaddingStart();
+        if (Utilities.isGSAEnabled(getContext())) {
+            setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        float touchX = event.getRawX();
+                        float touchY = event.getRawY();
+                        int rightDrawableWidth = getCompoundDrawables()[2].getBounds().width();
+                        int leftDrawableWidth = getCompoundDrawables()[0].getBounds().width();
+                        int paddingEnd = getPaddingEnd();
+                        int paddingStart = getPaddingStart();
 
-                    // Check if the touch is outside the bounds of the right drawable
-                    if (touchX >= (getRight() - rightDrawableWidth - paddingEnd)) {
-                        // Handle touch on the right drawable (lens icon)
-                        // launch lens app
-                        Intent lensIntent = new Intent();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("caller_package", Utilities.GSA_PACKAGE);
-                        bundle.putLong("start_activity_time_nanos", SystemClock.elapsedRealtimeNanos());
-                        lensIntent.setComponent(new ComponentName(Utilities.GSA_PACKAGE, Utilities.LENS_ACTIVITY))
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                .setPackage(Utilities.GSA_PACKAGE)
-                                .setData(Uri.parse(Utilities.LENS_URI))
-                                .putExtra("lens_activity_params", bundle);
-                        getContext().startActivity(lensIntent);
-                        return true;
-                    }
-                    // Check if the touch is outside the bounds of the left drawable
-                    else if (touchX <= (leftDrawableWidth + paddingStart + searchSideMargin)) {
-                        // Handle touch on the left drawable (Google icon)
-                        // launch google app
-                        Intent gIntent = getContext().getPackageManager().getLaunchIntentForPackage(Utilities.GSA_PACKAGE);
-                        gIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        getContext().startActivity(gIntent);
-                        return true;
-                    }
-                    // Check if the touch is in the middle part of the Search bar
-                    else if (touchX > (leftDrawableWidth + paddingStart) && touchX < (getRight() - rightDrawableWidth - paddingEnd)) {
-                        // Launch Pixel search directly if installed 
-                        // to produce a similar search experience like pixel launcher
-                        Intent pixelSearchIntent = getContext().getPackageManager().getLaunchIntentForPackage("rk.android.app.pixelsearch");
-                        if (pixelSearchIntent != null) {
-                            // The app is installed, launch it
-                            pixelSearchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            getContext().startActivity(pixelSearchIntent);
+                        // Check if the touch is outside the bounds of the right drawable
+                        if (touchX >= (getRight() - rightDrawableWidth - paddingEnd)) {
+                            // Handle touch on the right drawable (lens icon)
+                            // launch lens app
+                            Intent lensIntent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("caller_package", Utilities.GSA_PACKAGE);
+                            bundle.putLong("start_activity_time_nanos", SystemClock.elapsedRealtimeNanos());
+                            lensIntent.setComponent(new ComponentName(Utilities.GSA_PACKAGE, Utilities.LENS_ACTIVITY))
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    .setPackage(Utilities.GSA_PACKAGE)
+                                    .setData(Uri.parse(Utilities.LENS_URI))
+                                    .putExtra("lens_activity_params", bundle);
+                            getContext().startActivity(lensIntent);
                             return true;
-                        } else {
-                            // Use normal behaviour if pixel search is not installed.
-                            return false;
+                        }
+                        // Check if the touch is outside the bounds of the left drawable
+                        else if (touchX <= (leftDrawableWidth + paddingStart + searchSideMargin)) {
+                            // Handle touch on the left drawable (Google icon)
+                            // launch google app
+                            Intent gIntent = getContext().getPackageManager().getLaunchIntentForPackage(Utilities.GSA_PACKAGE);
+                            gIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            getContext().startActivity(gIntent);
+                            return true;
+                        }
+                        // Check if the touch is in the middle part of the Search bar
+                        else if (touchX > (leftDrawableWidth + paddingStart) && touchX < (getRight() - rightDrawableWidth - paddingEnd)) {
+                            // Launch Pixel search directly if installed 
+                            // to produce a similar search experience like pixel launcher
+                            Intent pixelSearchIntent = getContext().getPackageManager().getLaunchIntentForPackage("rk.android.app.pixelsearch");
+                            if (pixelSearchIntent != null) {
+                                // The app is installed, launch it
+                                pixelSearchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                getContext().startActivity(pixelSearchIntent);
+                                return true;
+                            } else {
+                                // Use normal behaviour if pixel search is not installed.
+                                return false;
+                            }
                         }
                     }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
         offsetTopAndBottom(mContentOverlap);
 
